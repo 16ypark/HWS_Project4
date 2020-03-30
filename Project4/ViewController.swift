@@ -34,7 +34,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         ac.addAction(UIAlertAction(title: "apple.com", style: .default, handler: openPage))
         ac.addAction(UIAlertAction(title: "hackingwithswift.com", style: .default, handler: openPage))
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        ac.popoverPresentationController?.barButtonItem = self.NavigationItem.rightBarButtonItem
+        ac.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
         present(ac, animated: true)
     }
     
