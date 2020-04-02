@@ -34,7 +34,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
         
-        toolbarItems = [progressButton, spacer, refresh]
+        let back = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(goBack))
+        
+        let forward = UIBarButtonItem(title: "Forward", style: .plain, target: self, action: #selector(goForward))
+        
+        toolbarItems = [progressButton, spacer, back, forward, refresh]
         navigationController?.isToolbarHidden = false
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -87,6 +91,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
         }
         
         decisionHandler(.cancel)
+    }
+    
+    @objc func goBack() {
+        webView.goBack()
+    }
+    
+    @objc func goForward() {
+        webView.goForward()
     }
 }
 
