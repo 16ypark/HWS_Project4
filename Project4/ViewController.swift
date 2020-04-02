@@ -12,7 +12,8 @@ import WebKit
 class ViewController: UIViewController, WKNavigationDelegate {
     var webView: WKWebView!
     var progressView: UIProgressView!
-    var websites = ["apple.com", "hackingwithswift.com"]
+    var websites: [String]?
+    var startWebsite: String?
     
     override func loadView() {
         webView = WKWebView()
@@ -43,14 +44,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         
-        let url = URL(string: "https://" + websites[0])!
+        let url = URL(string: "https://" + startWebsite!)!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
     }
 
     @objc func openTapped() {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
-        for website in websites {
+        for website in websites! {
             ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
         }
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -80,17 +81,24 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let url = navigationAction.request.url
+//        var match = false
         
         if let host = url?.host {
-            for website in websites {
+            for website in websites! {
                 if host.contains(website) {
+//                    match = true
                     decisionHandler(.allow)
                     return
                 }
             }
         }
-        
         decisionHandler(.cancel)
+
+//        if (match == false) {
+//            let ac = UIAlertController(title: "Not allowed", message: "The URL you requested is not allowed", preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+//        }
     }
     
     @objc func goBack() {
