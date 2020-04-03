@@ -68,11 +68,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
         title = webView.title
     }
     
-//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//        if keyPath == "estimatedProgress" {
-//            progressView.progress = Float(webView.estimatedProgress)
-//        }
-//    }
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress" {
             progressView.progress = Float(webView.estimatedProgress)
@@ -81,12 +76,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let url = navigationAction.request.url
-//        var match = false
         
         if let host = url?.host {
+            print(host)
             for website in websites! {
                 if host.contains(website) {
-//                    match = true
                     decisionHandler(.allow)
                     return
                 }
@@ -94,11 +88,9 @@ class ViewController: UIViewController, WKNavigationDelegate {
         }
         decisionHandler(.cancel)
 
-//        if (match == false) {
-//            let ac = UIAlertController(title: "Not allowed", message: "The URL you requested is not allowed", preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(ac, animated: true)
-//        }
+        let ac = UIAlertController(title: "Not allowed", message: "The URL you requested is not allowed", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     @objc func goBack() {

@@ -9,7 +9,7 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-    var websites = ["apple.com", "hackingwithswift.com"]
+    var websites = ["google.com", "hackingwithswift.com"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
